@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a17">
+  <title>HabitFlow — Fitness Habit Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="auth-shell" id="authView">
+    <section class="auth-art">
+      <div class="brand"><span class="brand-mark">↗</span> habitflow</div>
+      <div class="art-copy">
+        <p class="eyebrow">SMALL STEPS. REAL PROGRESS.</p>
+        <h1>Build a routine<br>that <em>moves you.</em></h1>
+        <p>Make your fitness goals feel achievable, one habit at a time.</p>
+        <div class="mini-stats"><div><strong>01</strong><span>Start small</span></div><div><strong>02</strong><span>Stay consistent</span></div><div><strong>03</strong><span>Feel the change</span></div></div>
+      </div>
+      <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="mobile-brand brand"><span class="brand-mark">↗</span> habitflow</div>
+        <p class="eyebrow" id="authEyebrow">YOUR PERSONAL WELLNESS SPACE</p>
+        <h2 id="authTitle">Welcome back</h2><p class="muted" id="authSubtitle">Sign in to pick up where you left off.</p>
+        <div class="auth-tabs"><button class="tab active" id="loginTab" type="button">Sign in</button><button class="tab" id="registerTab" type="button">Create account</button></div>
+        <form id="authForm">
+          <label for="authName" id="nameLabel" hidden>Your name</label><input id="authName" name="name" placeholder="Your name" autocomplete="name" hidden>
+          <label for="authEmail">Email address</label><input id="authEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required maxlength="254">
+          <label for="authPassword">Password</label><input id="authPassword" name="password" type="password" placeholder="At least 8 characters" autocomplete="current-password" minlength="8" required>
+          <button class="btn btn-primary full" type="submit" id="authSubmit">Sign in <span>→</span></button>
+        </form>
+        <p class="form-message" id="authMessage" role="status"></p>
+        <p class="tiny-note">Your habits are private to your account. Start with one small goal.</p>
+      </div>
+    </section>
+  </main>
+
+  <main class="app-shell" id="appView" hidden>
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="HabitFlow home"><span class="brand-mark">↗</span> habitflow</a>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-link active" data-page="overview"><span>▦</span> Overview</button>
+      <button class="nav-link" data-page="habits"><span>◉</span> My habits</button>
+      <button class="nav-link" data-page="history"><span>◷</span> Activity history</button>
+      <div class="sidebar-bottom"><div class="profile-avatar" id="avatar">H</div><div class="profile-copy"><strong id="profileName">Your account</strong><span id="profileEmail">signed in</span></div><button class="icon-btn" id="logoutBtn" title="Sign out" aria-label="Sign out">↗</button></div>
+    </aside>
+    <section class="main-area">
+      <header class="topbar"><div><p class="eyebrow" id="dateLabel">YOUR DAILY CHECK-IN</p><h1 id="pageTitle">Good morning<span class="period">.</span></h1></div><div class="top-actions"><span class="today-pill"><span class="live-dot"></span> <span id="todayText">Today</span></span><button class="btn btn-primary" id="topAddBtn">＋ <span>New habit</span></button></div></header>
+      <div class="notice" id="globalMessage" role="status" hidden></div>
+      <section id="overviewPage" class="page">
+        <div class="welcome-banner"><div><p class="eyebrow light">YOUR JOURNEY, YOUR PACE</p><h2>Consistency looks good on you.</h2><p>Show up for yourself today. Every check-in counts.</p></div><div class="banner-symbol">✳</div></div>
+        <div class="section-heading"><div><h2>Your day at a glance</h2><p class="muted">A little progress is still progress.</p></div><button class="text-btn" data-goto="habits">Manage habits ↗</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon mint">✓</div><p>Completed today</p><div class="stat-value"><strong id="completedStat">0</strong><span id="totalToday">of 0 habits</span></div><div class="progress-track"><div id="dailyProgress" class="progress-fill"></div></div></article>
+          <article class="stat-card"><div class="stat-icon peach">♨</div><p>Active habits</p><div class="stat-value"><strong id="activeStat">0</strong><span>in your routine</span></div><small class="stat-foot">Keep your routine realistic.</small></article>
+          <article class="stat-card"><div class="stat-icon lilac">⚡</div><p>Check-ins this week</p><div class="stat-value"><strong id="weekStat">0</strong><span>completed</span></div><small class="stat-foot">Every day is a fresh start.</small></article>
+        </div>
+        <div class="section-heading routine-heading"><div><h2>Today's routine <span class="count-badge" id="routineCount">0</span></h2><p class="muted">Check off a habit when you complete it.</p></div><button class="text-btn" data-goto="history">View history ↗</button></div>
+        <div id="todayHabits" class="habit-list"></div>
+        <div id="overviewEmpty" class="empty-state" hidden><div class="empty-illustration">✳</div><h3>Your routine starts here</h3><p>Add one small fitness habit to make today count.</p><button class="btn btn-primary" id="emptyAddBtn">＋ Create your first habit</button></div>
+      </section>
+      <section id="habitsPage" class="page" hidden>
+        <div class="section-heading"><div><h2>My habits</h2><p class="muted">Create a routine that fits your life.</p></div><button class="btn btn-primary" id="habitsAddBtn">＋ New habit</button></div>
+        <div class="filter-row"><label class="search-box"><span>⌕</span><input id="habitSearch" type="search" placeholder="Search your habits…" aria-label="Search habits"></label><select id="habitFilter" aria-label="Filter habits"><option value="all">All habits</option><option value="active">Active</option><option value="archived">Archived</option></select></div>
+        <div id="allHabits" class="habit-grid"></div>
+        <div id="habitsEmpty" class="empty-state" hidden><div class="empty-illustration">◉</div><h3>No habits found</h3><p>Try another search or create a new habit.</p></div>
+      </section>
+      <section id="historyPage" class="page" hidden>
+        <div class="section-heading"><div><h2>Activity history</h2><p class="muted">Look back at the effort you've put in.</p></div><label class="date-filter">Choose date <input type="date" id="historyDate"></label></div>
+        <div class="history-summary"><div class="stat-icon mint">✓</div><div><span class="muted">Completed on selected date</span><strong id="historyCount">0 / 0</strong></div></div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="habitDialog" class="habit-dialog">
+    <form id="habitForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">MAKE IT A HABIT</p><h2 id="dialogTitle">Create a habit</h2></div><button type="button" class="icon-btn close-dialog" aria-label="Close">×</button></div>
+      <input id="habitId" type="hidden">
+      <label for="habitName">Habit name</label><input id="habitName" placeholder="e.g. 20-minute walk" required maxlength="70">
+      <label for="habitCategory">Category</label><select id="habitCategory"><option>Movement</option><option>Strength</option><option>Hydration</option><option>Mindfulness</option><option>Sleep</option><option>Nutrition</option><option>Other</option></select>
+      <label for="habitTarget">Daily target</label><input id="habitTarget" placeholder="e.g. 20 minutes, 8 glasses" maxlength="80">
+      <label for="habitColor">Accent color</label><select id="habitColor"><option value="mint">Mint green</option><option value="peach">Warm peach</option><option value="lilac">Soft lilac</option><option value="blue">Sky blue</option></select>
+      <p class="form-message" id="habitMessage" role="status"></p>
+      <div class="dialog-actions"><button type="button" class="btn btn-secondary close-dialog">Cancel</button><button class="btn btn-primary" id="saveHabitBtn" type="submit">Save habit</button></div>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
